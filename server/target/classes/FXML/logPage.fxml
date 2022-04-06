@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="root2" styleClass="general" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="Controller">
+   <top>
+      <VBox prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="50.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Server status: " />
+                  <Label alignment="CENTER" text="&lt;placeholder&gt;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefWidth="600.0">
+               <children>
+                  <Label text="Number of Clients: " />
+                  <Label text="&lt;placeholder&gt;" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <HBox alignment="CENTER" prefHeight="313.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="283.0">
+               <children>
+                  <Label text="Server Log" />
+                  <ListView prefHeight="240.0" prefWidth="250.0" />
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="50.0">
+                     <children>
+                        <Label text="Player 1: " />
+                        <Label text="&lt;client num&gt;" />
+                        <Label text="&lt;score&gt;" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0">
+                     <children>
+                        <Label text="Player 2: " />
+                        <Label text="&lt;client num&gt;" />
+                        <Label text="&lt;score&gt;" />
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="15.0" left="30.0" right="30.0" top="15.0" />
+         </padding>
+      </HBox>
+   </center>
+</BorderPane>

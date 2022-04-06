@@ -16,18 +16,19 @@ import javafx.scene.layout.VBox;
 
 public class Controller implements Initializable {
 	
-	@FXML
-	private VBox root;
-    
-    @FXML
-    private TextField textField;
-    
-    @FXML
-    private TextField putText;
+	@FXML private BorderPane root; // start page
+
+    @FXML private BorderPane root2; // log page
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-        
+    }
+
+    public void startServer(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/logPage.fxml"));
+        Parent root2 = loader.load();
+        Controller myctr = loader.getController();
+        root.getScene().setRoot(root2);
     }
 }

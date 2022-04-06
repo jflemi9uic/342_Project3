@@ -13,23 +13,20 @@ public class JavaFXTemplate extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		 try {
-	            // Read file fxml and draw interface.
-	            Parent root = FXMLLoader.load(getClass()
-	                    .getResource("/FXML/MyFxml.fxml"));
-	 
-	            primaryStage.setTitle("My Application");
-             Scene s1 = new Scene(root, 500,500);
-            //  s1.getStylesheets().add("/styles/style1.css");
-	            primaryStage.setScene(s1);
-	            primaryStage.show();
-	         
-	        } catch(Exception e) {
-	            e.printStackTrace();
-	            System.exit(1);
-	        }
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("/FXML/startPage.fxml"));
+		
+			primaryStage.setTitle("My Application");
+			Scene s1 = new Scene(root, 700,400);
+			s1.getStylesheets().add("/styles/style.css");
+			primaryStage.setScene(s1);
+			primaryStage.show();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
-
 }
 
 
