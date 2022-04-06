@@ -1,1 +1,4 @@
-james
+
+1. set up the server
+2. make sure clients can connect
+3. game logic + winning conditions
