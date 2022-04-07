@@ -19,6 +19,7 @@ public class Main extends Application {
 			primaryStage.setTitle("Client");
 			Scene s1 = new Scene(root, 700,400);
 			s1.getStylesheets().add("/styles/style.css");
+			
 			primaryStage.setScene(s1);
 			primaryStage.show();
 			

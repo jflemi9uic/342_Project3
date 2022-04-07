@@ -28,7 +28,7 @@ public class Client extends Thread {
 
         while (true) {
             try {
-                MorraInfo message = in.readObject();
+                String message = in.readObject().toString(); // change from Morrainfo object
                 callback.accept(message);
 
             } catch (Exception e) {}
@@ -36,13 +36,14 @@ public class Client extends Thread {
 
     }
 
-    // this method is for the GuiServer class
     public void send(String data) {
         try {
+            System.out.println("     * entered send()");
             out.writeObject(data);
+            System.out.println("     * send the data");
         } catch (IOException e) {
+            System.out.println("     * stack trace");
             e.printStackTrace(); 
         }
     }
-
 }
