@@ -1,3 +1,6 @@
-Server.class
 Main.class
+Server$ClientThread.class
+MorraInfo.class
+Server.class
 Controller.class
+Server$TheServer.class

@@ -32,7 +32,7 @@
             <VBox alignment="TOP_CENTER" prefHeight="283.0">
                <children>
                   <Label text="Server Log" />
-                  <ListView prefHeight="240.0" prefWidth="250.0" />
+                  <ListView fx:id="listItems" prefHeight="240.0" prefWidth="250.0" />
                </children>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

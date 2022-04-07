@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.ListView;
+import javafx.application.Platform;
+import java.io.Serializable;
 
 public class Controller implements Initializable {
 	
@@ -20,7 +21,10 @@ public class Controller implements Initializable {
 
     @FXML private BorderPane root2; // log page
     @FXML private TextField inputPort; // server decided port
+    @FXML private ListView listItems; // updating log of events
+
     private static int chosenPort;
+    Server serverConnection;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { }
@@ -37,6 +41,14 @@ public class Controller implements Initializable {
         // make sure it is a valid port
         if (isNum(inputPort.getText())) {
             chosenPort = Integer.parseInt(inputPort.getText());
+
+            serverConnection = new Server(
+                data -> {
+                    Platform.runLater( () -> {
+            			listItems.getItems().add(data.toString()); 
+            		});
+                }
+            );
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/logPage.fxml"));
             Parent root2 = loader.load();

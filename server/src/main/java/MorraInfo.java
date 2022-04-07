@@ -1,4 +1,6 @@
-class MorraInfo implements Serializable{
+import java.io.Serializable;
+
+class MorraInfo implements Serializable {
 
     int p1Points;
     int p2Points;
@@ -7,5 +9,5 @@ class MorraInfo implements Serializable{
     boolean have2players;
     int p1Guess;
     int p2Guess;
-    
+
 }
