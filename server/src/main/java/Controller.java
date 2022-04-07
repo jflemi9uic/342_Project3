@@ -28,7 +28,6 @@ public class Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-        listItems = new ListView<String>();
     }
 
     public boolean isNum(String num) {
@@ -40,6 +39,7 @@ public class Controller implements Initializable {
     }
 
     public void startServer(ActionEvent e) throws IOException {
+        listItems = new ListView<String>();
         // make sure it is a valid port
         if (isNum(inputPort.getText())) {
             chosenPort = Integer.parseInt(inputPort.getText());
@@ -47,6 +47,7 @@ public class Controller implements Initializable {
             serverConnection = new Server(
                 data -> {
                     Platform.runLater( () -> {
+                        // TODO: not adding to listview correctly
             			listItems.getItems().add(data.toString());
             		});
                 }
