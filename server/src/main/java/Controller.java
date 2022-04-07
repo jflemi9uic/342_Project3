@@ -27,7 +27,9 @@ public class Controller implements Initializable {
     Server serverConnection;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) { }
+	public void initialize(URL location, ResourceBundle resources) {
+        listItems = new ListView<String>();
+    }
 
     public boolean isNum(String num) {
         if (num == "") { return false; }
@@ -45,7 +47,7 @@ public class Controller implements Initializable {
             serverConnection = new Server(
                 data -> {
                     Platform.runLater( () -> {
-            			listItems.getItems().add(data.toString()); 
+            			listItems.getItems().add(data.toString());
             		});
                 }
             );

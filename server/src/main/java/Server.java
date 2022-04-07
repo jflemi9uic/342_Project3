@@ -30,7 +30,7 @@ public class Server {
 
                 while (true) {
                     ClientThread c = new ClientThread(mysocket.accept(), count);
-                    callback.accept("client has connected to server: " + "client #" + count);
+                    callback.accept("client has connected to server: client #" + count);
                     clients.add(c);
                     c.start();
 
@@ -77,7 +77,7 @@ public class Server {
 
             while (true) {
                 try {
-                    MorraInfo data = (MorraInfo) in .readObject();
+                    String data = in.readObject().toString();
                     callback.accept("client: " + count + " sent: " + data);
                     updateClients("client #" + count + " said: " + data);
 
@@ -89,6 +89,5 @@ public class Server {
                 }
             }
         }
-
     }
 }

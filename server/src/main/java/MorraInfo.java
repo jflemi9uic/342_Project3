@@ -2,6 +2,16 @@ import java.io.Serializable;
 
 class MorraInfo implements Serializable {
 
+    String testString;
+
+    void setTestString(String s) {
+        testString = s;
+    }
+
+    String getTestString() {
+        return testString;
+    }
+
     int p1Points;
     int p2Points;
     String p1Plays;
@@ -9,5 +19,5 @@ class MorraInfo implements Serializable {
     boolean have2players;
     int p1Guess;
     int p2Guess;
-
+    
 }
