@@ -19,16 +19,29 @@ public class Controller implements Initializable {
 	@FXML private BorderPane root; // start page
 
     @FXML private BorderPane root2; // log page
+    @FXML private TextField inputPort; // server decided port
+    private static int chosenPort;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+	public void initialize(URL location, ResourceBundle resources) { }
+
+    public boolean isNum(String num) {
+        if (num == "") { return false; }
+
+        try { int i = Integer.parseInt(num); } 
+        catch (NumberFormatException e) { return false; }
+        return true;
     }
 
     public void startServer(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/logPage.fxml"));
-        Parent root2 = loader.load();
-        Controller myctr = loader.getController();
-        root.getScene().setRoot(root2);
+        // make sure it is a valid port
+        if (isNum(inputPort.getText())) {
+            chosenPort = Integer.parseInt(inputPort.getText());
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/logPage.fxml"));
+            Parent root2 = loader.load();
+            Controller myctr = loader.getController();
+            root.getScene().setRoot(root2);
+        }
     }
 }
