@@ -29,12 +29,10 @@ public class Server {
         public void run() {
             try (ServerSocket mysocket = new ServerSocket(port);) {
                 callback.accept("Server is waiting for a client!");
-                System.out.println("Server is waiting for a client!");
 
                 while (true) {
                     ClientThread c = new ClientThread(mysocket.accept(), count);
                     callback.accept("client has connected to server: client #" + count);
-                    System.out.println("client has connected to server: client #" + count);
                     clients.add(c);
                     c.start();
 

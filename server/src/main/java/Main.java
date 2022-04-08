@@ -92,6 +92,8 @@ public class Main extends Application {
 
 		logPane.setCenter(overall);
 
+		
+
 		primaryStage.setScene(startScene);
         primaryStage.show();
 
