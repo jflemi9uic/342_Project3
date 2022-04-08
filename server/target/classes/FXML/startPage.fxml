@@ -13,7 +13,7 @@
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
             <Label text="Enter Port: " />
-            <TextField fx:id="inputPort" text="5555" />
+            <TextField fx:id="inputPort" />
             <Button text="Start" fx:id="startButton" onAction="#startServer" />
          </children>
       </HBox>
