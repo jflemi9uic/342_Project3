@@ -11,6 +11,7 @@ class MorraInfo implements Serializable {
     String getTestString() {
         return testString;
     }
+    private static final long serialVersionUID = 1L;
 
     int p1Points;
     int p2Points;
