@@ -66,6 +66,11 @@ public class Main extends Application {
 								// data is from the first call to callback.accpet() in while true
 								MorraInfo temp = (MorraInfo) data;
 								PlayerNumber = temp.playernumber;
+								firstmessage = false;
+							} else {
+								MorraInfo temp = (MorraInfo) data;
+								// System.out.println("has player 1 played: " + temp.player1played);
+								// System.out.println("has player 2 played: " + temp.player2played);
 							}
 
 							// if (clientConnection.playernum == 1) {
