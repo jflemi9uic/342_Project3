@@ -15,15 +15,16 @@ public class Client extends Thread {
     private String ip;
     private int port;
 
-    private Consumer<Serializable> callback;
+    private Consumer<Serializable> callback, callback2;
 
     boolean firstmessage = true;
     int playernum = -1;
 
-    Client(String ip, int port, Consumer<Serializable> call) {
+    Client(String ip, int port, Consumer<Serializable> call, Consumer<Serializable> call2) {
         this.ip = ip;
         this.port = port;
         callback = call;
+        callback2 = call2;
     }
 
     public void run() {
@@ -38,7 +39,11 @@ public class Client extends Thread {
             try {
                 // `message` tells us what player we are from `mi`
                 MorraInfo message = (MorraInfo) in.readObject();
-                
+
+                if (message.have2players) {
+                    callback2.accept(message);
+                }
+
                 if (firstmessage) {
                     playernum = message.playernumber;
                     firstmessage = false;
@@ -52,6 +57,7 @@ public class Client extends Thread {
     }
 
     public void send(MorraInfo data) {
+        System.out.println("sending data to out");
         try {
             out.writeObject(data);
             out.reset();
