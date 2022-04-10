@@ -196,9 +196,11 @@ public class Server {
                     try {
                         for (ClientThread ct : clients) {
                             if (ct.count == player1) {
+                                System.out.println(masterMorraInfo.have2players);
                                 ct.out.writeObject(masterMorraInfo);
                                 ct.out.reset();
                             } else if (ct.count == player2) {
+                                System.out.println(masterMorraInfo.have2players);
                                 ct.out.writeObject(masterMorraInfo);
                                 ct.out.reset();
                             }
