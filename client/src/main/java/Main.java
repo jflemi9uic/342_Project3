@@ -26,7 +26,7 @@ public class Main extends Application {
 	Client clientConnection;
 	private static int play;
 	ListView<String> gameLog;
-	Label playernumberlabel2; // LABEL FOR THE PLAYER NUMBER
+	Label playernumberlabel2, p1points, p2points; // LABEL FOR THE PLAYER NUMBER
 	boolean firstmessage = true;
 	int PlayerNumber;
 	ImageView opImageView;
@@ -70,6 +70,7 @@ public class Main extends Application {
 								MorraInfo temp = (MorraInfo) data;
 								PlayerNumber = temp.playernumber;
 								firstmessage = false;
+								playernumberlabel2.setText(String.valueOf((PlayerNumber)));
 							} else {
 								MorraInfo temp = (MorraInfo) data;
 								// if player is 1 -> output 2's data to the log
@@ -111,9 +112,7 @@ public class Main extends Application {
 										guessField.setDisable(false);
 										sendData.setDisable(false);
 									} else {
-										//gameLog.getItems().add(String.valueOf(temp.getp1play()));
-										//gameLog.getItems().add(String.valueOf(temp.getp1guess()));
-										if (temp.getp1play() == 0){
+										if (temp.getp1play() == 0) {
 											Image t = new Image("zero.png");
 											opImageView.setImage(t);
 										}
@@ -148,11 +147,14 @@ public class Main extends Application {
 									}
 								}
 							}
-
-							// if (clientConnection.playernum == 1) {
-							// 	gameLog.getItems().add(String.valueOf(temp.getp2play()));
-							// 	gameLog.getItems().add(String.valueOf(temp.getp2guess()));
-							// }
+						});
+					},
+					data2 -> {
+						Platform.runLater( () -> {
+							MorraInfo temp = (MorraInfo) data2;
+							p1points.setText(String.valueOf(temp.p1Points));
+							p2points.setText(String.valueOf(temp.p2Points));
+//							System.out.println("idk something here");
 						});
 					}
 				);
@@ -215,13 +217,20 @@ public class Main extends Application {
 
 			guessField.setPromptText("(0-10)");
 
-
-			Label playernumberlabel = new Label("Player: ");
+			Label playernumberlabel = new Label("You are player: ");
 			playernumberlabel2 = new Label(""); // THIS IS THE PLAYER NUMBER
 			HBox playerbox = new HBox(playernumberlabel, playernumberlabel2);
 
+			Label p1pointsLabel = new Label("Player 1 points: ");
+			p1points = new Label("0");
+			Label p2pointsLabel = new Label("Player 2 points: ");
+			p2points = new Label("0");
+			HBox scores1 = new HBox(p1pointsLabel, p1points);
+			HBox scores2 = new HBox(p2pointsLabel, p2points);
+			VBox scores12 = new VBox(scores1, scores2);
+
 			HBox opHBOX = new HBox(opPlayedLabel, opImageView);
-			VBox opWplayer = new VBox(playerbox, opHBOX);
+			VBox opWplayer = new VBox(playerbox, opHBOX, scores12);
 			HBox opWListview = new HBox(gameLog, opWplayer);
 			HBox plays_0_5 = new HBox(b0,b1,b2,b3,b4,b5);
 			HBox guess = new HBox(guessLabel, guessField, sendData);
@@ -286,8 +295,9 @@ public class Main extends Application {
 					guessField.setDisable(true);
 
 					MorraInfo asdf = new MorraInfo(play, Integer.parseInt(guessField.getText()), PlayerNumber);
-					// need to add the playernumber to this IMPORTANT bc send is not sending right
+					System.out.println("sent asdf");
 					clientConnection.send(asdf);
+
 				}
 			});
 			
