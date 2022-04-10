@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 import javafx.application.Platform;
 import javafx.scene.control.ListView;
@@ -14,12 +16,19 @@ public class Server {
     int count = 1;
     ArrayList<ClientThread> clients = new ArrayList<ClientThread> ();
     TheServer server;
-    private Consumer<Serializable> callback;
+    private Consumer<Serializable> callback, callback2;
     private int port;
+    public int countClients = 0;
+    Label numClients;
 
-    Server(int port, Consumer<Serializable> call) {
+    int player1 = -1;
+    int player2 = -1;
+
+    Server(int port, Consumer<Serializable> call, Consumer<Serializable> call2) {
+        this.numClients = numClients;
         this.port = port;
         callback = call;
+        callback2 = call2;
         server = new TheServer();
         server.start();
     }
@@ -31,12 +40,24 @@ public class Server {
                 callback.accept("Server is waiting for a client!");
 
                 while (true) {
-                    ClientThread c = new ClientThread(mysocket.accept(), count);
-                    callback.accept("client has connected to server: client #" + count);
-                    clients.add(c);
-                    c.start();
+                    if (countClients < 2) {
+                        
+                        ClientThread c = new ClientThread(mysocket.accept(), count);
+                        callback.accept("client has connected to server: client #" + count);
+                        callback2.accept("1");
+                        clients.add(c);
 
-                    count++;
+                        if (player1 == -1) {
+                            player1 = count;
+                        } else if (player2 == -1) {
+                            player2 = count;
+                        }
+
+                        c.start();
+
+                        count++;
+                        countClients++;
+                    }
                 }
             } //end of try
             catch (Exception e) {
@@ -77,16 +98,32 @@ public class Server {
 
             updateClients("new client on server: client #" + count);
 
+            MorraInfo mi = new MorraInfo();
+            if (player1 == count) {
+                mi.playernumber = 1;
+            } else if (player2 == count) {
+                mi.playernumber = 1;
+            }
+
+            try {
+            out.writeObject(mi);
+            } catch (Exception e) {}
+
             while (true) {
                 try {
-                    String data = in.readObject().toString();
-                    callback.accept("client: " + count + " sent: " + data);
-                    updateClients("client #" + count + " said: " + data);
+                    MorraInfo data = (MorraInfo) in.readObject();
+                    callback.accept("Client #" + count + " played: " + data.getp1play());
+                    callback.accept("Client #" + count + " guessed: " + data.getp1guess());
+
+                    // callback.accept("client: " + count + " sent: " + data.idk());
+                    // updateClients("client #" + count + " said: " + data.idk());
 
                 } catch (Exception e) {
-                    callback.accept("OOOOPPs...Something wrong with the socket from client: " + count + "....closing down!");
+                    callback.accept("Client #" + count + " left");
                     updateClients("Client #" + count + " has left the server!");
                     clients.remove(this);
+                    countClients--;
+                    callback2.accept("-1");
                     break;
                 }
             }

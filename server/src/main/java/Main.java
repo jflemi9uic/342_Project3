@@ -28,11 +28,26 @@ public class Main extends Application {
         return true;
     }
 
+	void decrementPlayers() {
+		int curClients = Integer.parseInt(numClientsNum.getText());
+		curClients--;
+		numClientsNum.setText(String.valueOf(curClients));
+
+	}
+	void incrementPlayers() {
+		int curClients = Integer.parseInt(numClientsNum.getText());
+		System.out.println("cur clients: " + curClients);
+		curClients++;
+
+		numClientsNum.setText(String.valueOf(curClients));
+	}
+
 	Scene startScene, logScene;
 	BorderPane startPane, logPane;
 	ListView serverLog;
 	private int port;
 	Server serverConnection;
+	Label numClientsNum;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -61,7 +76,7 @@ public class Main extends Application {
 		statushbox.setAlignment(Pos.CENTER);
 
 		Label numClientsLabel = new Label("Number of clients: ");
-		Label numClientsNum = new Label("");
+		numClientsNum = new Label("0");
 		HBox clientshbox = new HBox(numClientsLabel, numClientsNum);
 		clientshbox.setAlignment(Pos.CENTER);
 
@@ -92,8 +107,6 @@ public class Main extends Application {
 
 		logPane.setCenter(overall);
 
-		
-
 		primaryStage.setScene(startScene);
         primaryStage.show();
 
@@ -111,6 +124,12 @@ public class Main extends Application {
 						Platform.runLater( () -> {
 							serverLog.getItems().add(data.toString()); 
 						});
+					}, 
+					data2 -> {
+						// // data2 is either 1 or -1
+						// // if 1 then incrememnt else decrememnt
+						// if (data2 == "1") { incrementPlayers(); }
+						// else { decrementPlayers(); }
 					}
             	); // end of serverConnection
 			}
