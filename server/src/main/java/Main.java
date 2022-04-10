@@ -126,7 +126,8 @@ public class Main extends Application {
 							else { decrementPlayers(); }
 						});
 					}
-            	); // end of serverConnection
+
+					); // end of serverConnection
 			}
 		}); // end of setOnAction
 	}

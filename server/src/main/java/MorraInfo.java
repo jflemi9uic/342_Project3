@@ -31,6 +31,10 @@ class MorraInfo implements Serializable {
     // what each player guessed
     int p1Guess;
     int p2Guess;
+    //which player won
+    boolean p1Wins;
+    boolean p2Wins;
+
 
     boolean player1played = false;
     boolean player2played = false;

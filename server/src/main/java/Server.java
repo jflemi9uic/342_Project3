@@ -43,6 +43,23 @@ public class Server {
         System.out.println("player1played: " + masterMorraInfo.player1played);
         System.out.println("player2played: " + masterMorraInfo.player2played);
     }
+    //#########################################
+    public int answer(int x, int y){
+        int z = x + y;
+        return z;
+    }
+    public void checkWinner(MorraInfo testing) {
+        int total = answer(testing.p1Plays, testing.p2Plays);
+        if(testing.p1Guess != total && testing.p2Guess == total){
+            testing.p2Points++;
+        }
+        else if(testing.p2Guess != total && testing.p1Guess == total){
+            testing.p1Points++;
+        }
+        else{
+            return;
+        }
+    }
 
     public class TheServer extends Thread {
 
