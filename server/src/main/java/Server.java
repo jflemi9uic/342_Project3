@@ -20,6 +20,7 @@ public class Server {
     private int port;
     public int countClients = 0;
     Label numClients;
+    MorraInfo masterMorraInfo = new MorraInfo();
 
     int player1 = -1;
     int player2 = -1;
@@ -31,6 +32,16 @@ public class Server {
         callback2 = call2;
         server = new TheServer();
         server.start();
+    }
+
+    void printMasterObject() {
+        System.out.println("* MASTER OBJECT *");
+        System.out.println("p1plays: " + masterMorraInfo.p1Plays);
+        System.out.println("p1guess: " + masterMorraInfo.p1Guess);
+        System.out.println("p2plays: " + masterMorraInfo.p2Plays);
+        System.out.println("p2guess: " + masterMorraInfo.p2Guess);
+        System.out.println("player1played: " + masterMorraInfo.player1played);
+        System.out.println("player2played: " + masterMorraInfo.player2played);
     }
 
     public class TheServer extends Thread {
@@ -111,15 +122,34 @@ public class Server {
 
             while (true) {
                 try {
+                    // if this runs, we have recieved an object...
                     MorraInfo data = (MorraInfo) in.readObject();
-                    System.out.println("data.playernumber = " + data.playernumberREAL);
+
+                    // player 1 sent us something
                     if (data.playernumberREAL == 1) {
+                        // update the master object
+                        masterMorraInfo.p1Plays = data.getp1play();
+                        masterMorraInfo.p1Guess = data.getp1guess();
+                        masterMorraInfo.player1played = true;
+                        // send the messages to the serverlog
                         callback.accept("Client #" + count + " played: " + data.getp1play());
                         callback.accept("Client #" + count + " guessed: " + data.getp1guess());
+                    // player 2 sent us soething
                     } else if (data.playernumberREAL == 2) {
+                        // update the master object
+                        masterMorraInfo.p2Plays = data.getp2play();
+                        masterMorraInfo.p2Guess = data.getp2guess();
+                        masterMorraInfo.player2played = true;
+                        // send the mseeages to the serverlog
                         callback.accept("Client #" + count + " played: " + data.getp2play());
                         callback.accept("Client #" + count + " guessed: " + data.getp2guess());
                     }
+
+                    printMasterObject();
+
+                    try {
+                        out.writeObject(data);
+                    } catch (Exception e) {}
 
                 } catch (Exception e) {
                     callback.accept("Client #" + count + " left");

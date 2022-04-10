@@ -9,9 +9,11 @@ class MorraInfo implements Serializable {
         if (PlayerNumber == 1) {
             p1Plays = play;
             p1Guess = guess;
+            player1played = true;
         } else {
             p2Plays = play;
             p2Guess = guess;
+            player2played = true;
         }
         playernumberREAL = PlayerNumber;
     }
@@ -28,7 +30,10 @@ class MorraInfo implements Serializable {
     int p2Plays;
     // what each player guessed
     int p1Guess;
-    int p2Guess;   
+    int p2Guess;
+
+    boolean player1played = false;
+    boolean player2played = false;
 
     int getp1play() { return p1Plays; }
     int getp1guess() { return p1Guess; }
