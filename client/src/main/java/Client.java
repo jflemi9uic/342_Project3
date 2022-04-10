@@ -12,15 +12,23 @@ public class Client extends Thread {
     ObjectOutputStream out;
     ObjectInputStream in ;
 
+    private String ip;
+    private int port;
+
     private Consumer<Serializable> callback;
 
-    Client(Consumer<Serializable> call) {
+    boolean firstmessage = true;
+    int playernum = -1;
+
+    Client(String ip, int port, Consumer<Serializable> call) {
+        this.ip = ip;
+        this.port = port;
         callback = call;
     }
 
     public void run() {
         try {
-            socketClient = new Socket("127.0.0.1", 5555);
+            socketClient = new Socket(ip, port);
             out = new ObjectOutputStream(socketClient.getOutputStream());
             in = new ObjectInputStream(socketClient.getInputStream());
             socketClient.setTcpNoDelay(true);
@@ -28,21 +36,31 @@ public class Client extends Thread {
 
         while (true) {
             try {
-                String message = in.readObject().toString(); // change from Morrainfo object
-                callback.accept(message);
+                MorraInfo message = (MorraInfo) in.readObject();
+
+                if (firstmessage) {
+                    System.out.println("Assigning player number here");
+                    playernum = message.playernumber;
+                    System.out.println("Player number = " + playernum);
+                    firstmessage = false;
+
+                } else {
+                    System.out.println("callback.accept()");
+                    callback.accept(message);
+                }
+
+                System.out.println("passed the if else");
 
             } catch (Exception e) {}
         }
 
     }
 
-    public void send(String data) {
+    public void send(MorraInfo data) {
         try {
-            System.out.println("     * entered send()");
             out.writeObject(data);
-            System.out.println("     * send the data");
+            System.out.println("Sending data inside of send()");
         } catch (IOException e) {
-            System.out.println("     * stack trace");
             e.printStackTrace(); 
         }
     }
