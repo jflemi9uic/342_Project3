@@ -69,8 +69,17 @@ public class Main extends Application {
 								firstmessage = false;
 							} else {
 								MorraInfo temp = (MorraInfo) data;
-								// IF BOTH PLAYERS HAVE PLAYED
-								// FIND A WAY TO DISPLAY EATHOTHERS RESULTS HERE I THINK
+								// if player is 1 -> output 2's data to the log
+								if (temp.have2players) {
+
+									if (PlayerNumber == 1) {
+										gameLog.getItems().add(String.valueOf(temp.getp2play()));
+										gameLog.getItems().add(String.valueOf(temp.getp2guess()));
+									} else {
+										gameLog.getItems().add(String.valueOf(temp.getp1play()));
+										gameLog.getItems().add(String.valueOf(temp.getp1guess()));
+									}
+								}
 							}
 
 							// if (clientConnection.playernum == 1) {

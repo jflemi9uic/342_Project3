@@ -135,6 +135,7 @@ public class Server {
 
             try {
                 out.writeObject(mi);
+                out.reset();
             } catch (Exception e) {}
 
             while (true) {
@@ -190,7 +191,15 @@ public class Server {
                     // printMasterObject();
 
                     try {
-                        out.writeObject(masterMorraInfo);
+                        for (ClientThread ct : clients) {
+                            if (ct.count == player1) {
+                                ct.out.writeObject(masterMorraInfo);
+                                ct.out.reset();
+                            } else if (ct.count == player2) {
+                                ct.out.writeObject(masterMorraInfo);
+                                ct.out.reset();
+                            }
+                        }
                     } catch (Exception e) {}
 
                 } catch (Exception e) {

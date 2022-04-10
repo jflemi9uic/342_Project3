@@ -54,6 +54,7 @@ public class Client extends Thread {
     public void send(MorraInfo data) {
         try {
             out.writeObject(data);
+            out.reset();
         } catch (IOException e) {
             e.printStackTrace(); 
         }
