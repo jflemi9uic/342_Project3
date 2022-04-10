@@ -3,22 +3,21 @@ import java.io.Serializable;
 class MorraInfo implements Serializable {
 
     int playernumber = 0; // one time var
+    int playernumberREAL;
 
-    MorraInfo(int play, int guess) {
-        if (firstPlayer) {
+    MorraInfo(int play, int guess, int PlayerNumber) {
+        if (PlayerNumber == 1) {
             p1Plays = play;
             p1Guess = guess;
         } else {
             p2Plays = play;
             p2Guess = guess;
         }
-        firstPlayer = false;
+        playernumberREAL = PlayerNumber;
     }
 
     MorraInfo() {}
 
-    // if first player is true -> fill in p1 data else p2
-    public boolean firstPlayer = true;
     // if have2players is true -> evaluate it to see who won
     boolean have2players;
     // max 2 to win
@@ -35,4 +34,6 @@ class MorraInfo implements Serializable {
     int getp1guess() { return p1Guess; }
     int getp2play() { return p2Plays; }
     int getp2guess() { return p2Guess; }
+
+    int tempnum = 0;
 }

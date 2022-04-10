@@ -26,6 +26,9 @@ public class Main extends Application {
 	Client clientConnection;
 	private static int play;
 	ListView<String> gameLog;
+	Label playernumberlabel2; // LABEL FOR THE PLAYER NUMBER
+	boolean firstmessage = true;
+	int PlayerNumber;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -59,14 +62,16 @@ public class Main extends Application {
 				clientConnection = new Client(ipAddress.getText(), Integer.parseInt(portNum.getText()), 
 					data -> {
 						Platform.runLater( () -> {
-							MorraInfo temp = (MorraInfo) data;
-
-							System.out.println("reached inside the callback accept of client");
-
-							if (clientConnection.playernum == 1) {
-								gameLog.getItems().add(String.valueOf(temp.getp2play()));
-								gameLog.getItems().add(String.valueOf(temp.getp2guess()));
+							if (firstmessage) {
+								// data is from the first call to callback.accpet() in while true
+								MorraInfo temp = (MorraInfo) data;
+								PlayerNumber = temp.playernumber;
 							}
+
+							// if (clientConnection.playernum == 1) {
+							// 	gameLog.getItems().add(String.valueOf(temp.getp2play()));
+							// 	gameLog.getItems().add(String.valueOf(temp.getp2guess()));
+							// }
 						});
 					}
 				);
@@ -130,8 +135,13 @@ public class Main extends Application {
 			guessField.setPromptText("(0-10)");
 			Button sendData = new Button("Send");
 
+			Label playernumberlabel = new Label("Player: ");
+			playernumberlabel2 = new Label(""); // THIS IS THE PLAYER NUMBER
+			HBox playerbox = new HBox(playernumberlabel, playernumberlabel2);
+
 			HBox opHBOX = new HBox(opPlayedLabel, opImageView);
-			HBox opWListview = new HBox(gameLog, opHBOX);
+			VBox opWplayer = new VBox(playerbox, opHBOX);
+			HBox opWListview = new HBox(gameLog, opWplayer);
 			HBox plays_0_5 = new HBox(b0,b1,b2,b3,b4,b5);
 			HBox guess = new HBox(guessLabel, guessField, sendData);
 
@@ -194,12 +204,9 @@ public class Main extends Application {
 					sendData.setDisable(true);
 					guessField.setDisable(true);
 
-					// System.out.println("PLAYED: " + play);
-					// System.out.println("GUESSED: " + guessField.getText());
-
-					MorraInfo asdf = new MorraInfo(play, Integer.parseInt(guessField.getText()));
+					MorraInfo asdf = new MorraInfo(play, Integer.parseInt(guessField.getText()), PlayerNumber);
+					// need to add the playernumber to this IMPORTANT bc send is not sending right
 					clientConnection.send(asdf);
-					System.out.println("Data was sent");
 				}
 			});
 			

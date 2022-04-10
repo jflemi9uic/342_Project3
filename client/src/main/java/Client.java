@@ -36,30 +36,25 @@ public class Client extends Thread {
 
         while (true) {
             try {
+                // `message` tells us what player we are from `mi`
                 MorraInfo message = (MorraInfo) in.readObject();
+                callback.accept(message);
 
                 if (firstmessage) {
-                    System.out.println("Assigning player number here");
                     playernum = message.playernumber;
-                    System.out.println("Player number = " + playernum);
                     firstmessage = false;
 
                 } else {
-                    System.out.println("callback.accept()");
                     callback.accept(message);
                 }
 
-                System.out.println("passed the if else");
-
             } catch (Exception e) {}
         }
-
     }
 
     public void send(MorraInfo data) {
         try {
             out.writeObject(data);
-            System.out.println("Sending data inside of send()");
         } catch (IOException e) {
             e.printStackTrace(); 
         }
