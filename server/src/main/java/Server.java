@@ -147,12 +147,32 @@ public class Server {
 
                     if (masterMorraInfo.player1played && masterMorraInfo.player2played) {
                         masterMorraInfo.have2players = true;
+                        System.out.println("finish round logic");
+
+                        // EVALUATE WHO WON
+                        int p1play = masterMorraInfo.getp1play();
+                        int p2play = masterMorraInfo.getp2play();
+                        int p1guess = masterMorraInfo.getp1guess();
+                        int p2guess = masterMorraInfo.getp2guess();
+                        int total = p1play + p2play;
+
+                        if (p1guess == total && p2guess != total) {
+                            System.out.println("p1 wins round");
+                        }
+                        else if (p1guess != total && p2guess == total) {
+                            System.out.println("p2 wins round");
+                        }
+                        else if (p1guess == total && p2guess == total) {
+                            System.out.println("both right, no one wins");
+                        }
+                        else {
+                            System.out.println("both wrong, no one wins");
+                        }
                     }
 
-                    printMasterObject();
+                    // printMasterObject();
 
                     try {
-                        System.out.println("where is this leading?");
                         out.writeObject(masterMorraInfo);
                     } catch (Exception e) {}
 

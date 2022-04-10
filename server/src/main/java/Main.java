@@ -42,6 +42,7 @@ public class Main extends Application {
 	private int port;
 	Server serverConnection;
 	Label numClientsNum;
+	int p1,p2;
 
 	@Override
 	public void start(Stage primaryStage) {
