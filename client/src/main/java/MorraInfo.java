@@ -4,6 +4,7 @@ class MorraInfo implements Serializable {
 
     int playernumber = 0; // one time var
     int playernumberREAL;
+    private static final long serialVersionUID =1L;
 
     MorraInfo(int play, int guess, int PlayerNumber) {
         if (PlayerNumber == 1) {
@@ -23,8 +24,8 @@ class MorraInfo implements Serializable {
     // if have2players is true -> evaluate it to see who won
     boolean have2players;
     // max 2 to win
-    int p1Points;
-    int p2Points;
+    int p1Points = 0;
+    int p2Points = 0;
     // what each player played
     int p1Plays;
     int p2Plays;
