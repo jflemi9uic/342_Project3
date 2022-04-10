@@ -29,6 +29,9 @@ public class Main extends Application {
 	Label playernumberlabel2; // LABEL FOR THE PLAYER NUMBER
 	boolean firstmessage = true;
 	int PlayerNumber;
+	ImageView opImageView;
+	TextField guessField = new TextField();
+	Button sendData = new Button("Send");
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -71,13 +74,77 @@ public class Main extends Application {
 								MorraInfo temp = (MorraInfo) data;
 								// if player is 1 -> output 2's data to the log
 								if (temp.have2players) {
-
+//######################################################
 									if (PlayerNumber == 1) {
-										gameLog.getItems().add(String.valueOf(temp.getp2play()));
-										gameLog.getItems().add(String.valueOf(temp.getp2guess()));
+										//gameLog.getItems().add(String.valueOf(temp.getp2play()));
+										//gameLog.getItems().add(String.valueOf(temp.getp2guess()));
+										if (temp.getp2play() == 0){
+											Image t = new Image("zero.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp2play() == 1) {
+											Image t = new Image("one.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp2play() == 2) {
+											Image t = new Image("two.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp2play() == 3) {
+											Image t = new Image("three.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp2play() == 4) {
+											Image t = new Image("four.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp2play() == 5) {
+											Image t = new Image("five.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp2play() == 6) {
+											Image t = new Image("six.png");
+											opImageView.setImage(t);
+										}
+										gameLog.getItems().add("Correct Answer was: " + String.valueOf(temp.getp1play() + temp.getp2play()));
+										temp.have2players = false;
+										guessField.setDisable(false);
+										sendData.setDisable(false);
 									} else {
-										gameLog.getItems().add(String.valueOf(temp.getp1play()));
-										gameLog.getItems().add(String.valueOf(temp.getp1guess()));
+										//gameLog.getItems().add(String.valueOf(temp.getp1play()));
+										//gameLog.getItems().add(String.valueOf(temp.getp1guess()));
+										if (temp.getp1play() == 0){
+											Image t = new Image("zero.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp1play() == 1) {
+											Image t = new Image("one.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp1play() == 2) {
+											Image t = new Image("two.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp1play() == 3) {
+											Image t = new Image("three.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp1play() == 4) {
+											Image t = new Image("four.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp1play() == 5) {
+											Image t = new Image("five.png");
+											opImageView.setImage(t);
+										}
+										else if (temp.getp1play() == 6) {
+											Image t = new Image("six.png");
+											opImageView.setImage(t);
+										}
+										gameLog.getItems().add("Correct Answer was: " + String.valueOf(temp.getp1play() + temp.getp2play()));
+										temp.have2players = true;
+										guessField.setDisable(false);
+										sendData.setDisable(false);
 									}
 								}
 							}
@@ -98,7 +165,7 @@ public class Main extends Application {
 			gameLog = new ListView();
 			Label opPlayedLabel = new Label("Opponent played: ");
 			Image opImage = new Image("idk.jpg");
-			ImageView opImageView = new ImageView(opImage);
+			opImageView = new ImageView(opImage);
 			opImageView.setFitHeight(70); 
       		opImageView.setFitWidth(70);  
 
@@ -145,9 +212,9 @@ public class Main extends Application {
 			b5.setGraphic(iv5); 
 
 			Label guessLabel = new Label("Enter Guess:");
-			TextField guessField = new TextField();
+
 			guessField.setPromptText("(0-10)");
-			Button sendData = new Button("Send");
+
 
 			Label playernumberlabel = new Label("Player: ");
 			playernumberlabel2 = new Label(""); // THIS IS THE PLAYER NUMBER
