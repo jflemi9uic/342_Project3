@@ -45,7 +45,6 @@ public class Client extends Thread {
                     firstmessage = false;
 
                 } else {
-                    System.out.println("finally entereing here?");
                     callback.accept(message);
                 }
 

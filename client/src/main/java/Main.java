@@ -69,8 +69,8 @@ public class Main extends Application {
 								firstmessage = false;
 							} else {
 								MorraInfo temp = (MorraInfo) data;
-								// System.out.println("has player 1 played: " + temp.player1played);
-								// System.out.println("has player 2 played: " + temp.player2played);
+								// IF BOTH PLAYERS HAVE PLAYED
+								// FIND A WAY TO DISPLAY EATHOTHERS RESULTS HERE I THINK
 							}
 
 							// if (clientConnection.playernum == 1) {
