@@ -38,16 +38,15 @@ public class Client extends Thread {
             try {
                 // `message` tells us what player we are from `mi`
                 MorraInfo message = (MorraInfo) in.readObject();
-                callback.accept(message);
-
+                
                 if (firstmessage) {
                     playernum = message.playernumber;
                     firstmessage = false;
+                    callback.accept(message);
 
                 } else {
                     callback.accept(message);
                 }
-
             } catch (Exception e) {}
         }
     }
