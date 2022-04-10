@@ -145,10 +145,15 @@ public class Server {
                         callback.accept("Client #" + count + " guessed: " + data.getp2guess());
                     }
 
+                    if (masterMorraInfo.player1played && masterMorraInfo.player2played) {
+                        masterMorraInfo.have2players = true;
+                    }
+
                     printMasterObject();
 
                     try {
-                        out.writeObject(data);
+                        System.out.println("where is this leading?");
+                        out.writeObject(masterMorraInfo);
                     } catch (Exception e) {}
 
                 } catch (Exception e) {

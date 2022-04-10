@@ -21,7 +21,7 @@ class MorraInfo implements Serializable {
     MorraInfo() {}
 
     // if have2players is true -> evaluate it to see who won
-    boolean have2players;
+    boolean have2players = false;;
     // max 2 to win
     int p1Points;
     int p2Points;
