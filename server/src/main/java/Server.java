@@ -16,7 +16,7 @@ public class Server {
     int count = 1;
     ArrayList<ClientThread> clients = new ArrayList<ClientThread> ();
     TheServer server;
-    private Consumer<Serializable> callback, callback2;
+    private Consumer<Serializable> callback, callback2, callback3, callback4;
     private int port;
     public int countClients = 0;
     Label numClients;
@@ -25,11 +25,14 @@ public class Server {
     int player1 = -1;
     int player2 = -1;
 
-    Server(int port, Consumer<Serializable> call, Consumer<Serializable> call2) {
+    Server(int port, Consumer<Serializable> call, Consumer<Serializable> call2,
+           Consumer<Serializable> call3, Consumer<Serializable> call4) {
         this.numClients = numClients;
         this.port = port;
         callback = call;
         callback2 = call2;
+        callback3 = call3;
+        callback4= call4;
         server = new TheServer();
         server.start();
     }
@@ -138,7 +141,8 @@ public class Server {
                 out.reset();
             } catch (Exception e) {}
 
-            while (true) {
+            // while both clients don't have 2 points
+            while (masterMorraInfo.p1Points != 2 && masterMorraInfo.p2Points != 2) {
                 try {
                     // if this runs, we have recieved an object...
                     MorraInfo data = (MorraInfo) in.readObject();
@@ -165,7 +169,6 @@ public class Server {
 
                     if (masterMorraInfo.player1played && masterMorraInfo.player2played) {
                         masterMorraInfo.have2players = true;
-                        System.out.println("finish round logic");
 
                         // EVALUATE WHO WON
                         int p1play = masterMorraInfo.getp1play();
@@ -175,20 +178,20 @@ public class Server {
                         int total = p1play + p2play;
 
                         if (p1guess == total && p2guess != total) {
+                            masterMorraInfo.p1Points++;
                             System.out.println("p1 wins round");
-                        }
-                        else if (p1guess != total && p2guess == total) {
+                            callback3.accept(masterMorraInfo.p1Points);
+
+                        } else if (p1guess != total && p2guess == total) {
+                            masterMorraInfo.p2Points++;
                             System.out.println("p2 wins round");
-                        }
-                        else if (p1guess == total && p2guess == total) {
+                            callback4.accept(masterMorraInfo.p2Points);
+                        } else if (p1guess == total && p2guess == total) {
                             System.out.println("both right, no one wins");
-                        }
-                        else {
+                        } else {
                             System.out.println("both wrong, no one wins");
                         }
                     }
-
-                    // printMasterObject();
 
                     try {
                         for (ClientThread ct : clients) {

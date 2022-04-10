@@ -1,5 +1,4 @@
 import java.util.HashMap;
-
 import javafx.application.Application;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -43,6 +42,8 @@ public class Main extends Application {
 	Server serverConnection;
 	Label numClientsNum;
 	int p1,p2;
+	Label player1score;
+	Label player2score;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -50,8 +51,8 @@ public class Main extends Application {
 
 		startPane = new BorderPane();
 		logPane = new BorderPane();
-		startPane.setStyle("-fx-font-family: SansSerif;-fx-background-color: coral;");
-		logPane.setStyle("-fx-font-family: SansSerif;-fx-background-color: coral;");
+		startPane.setStyle("-fx-font-family: SansSerif;-fx-background-color: #ff7f50;");
+		logPane.setStyle("-fx-font-family: SansSerif;-fx-background-color: #ff7f50;");
 		startScene = new Scene(startPane, 600, 400);
 		logScene = new Scene(logPane, 600, 400);
 
@@ -83,14 +84,14 @@ public class Main extends Application {
 		logvbox.setPadding(new Insets(10,10,10,10));
 
 		// peoples scores inside of a vbox
-		Label player1 = new Label("Player 1: ");
+		Label player1 = new Label("Player 1 (points): ");
 		Label player1client = new Label("");
-		Label player1score = new Label("");
+		player1score = new Label("0");
 		HBox player1hbox = new HBox(player1, player1client, player1score);
 
-		Label player2 = new Label("Player 2: ");
+		Label player2 = new Label("Player 2 (points): ");
 		Label player2client = new Label("");
-		Label player2score = new Label("");
+		player2score = new Label("0");
 		HBox player2hbox = new HBox(player2, player2client, player2score);
 
 		VBox players = new VBox(player1hbox, player2hbox);
@@ -117,13 +118,23 @@ public class Main extends Application {
 				serverConnection = new Server(port, 
 					data -> {
 						Platform.runLater( () -> {
-							serverLog.getItems().add(data.toString()); 
+							serverLog.getItems().add(data.toString());
 						});
 					}, 
 					data2 -> {
 						Platform.runLater( () -> {
 							if (data2 == "1") { incrementPlayers(); }
 							else { decrementPlayers(); }
+						});
+					},
+					data3 -> {
+						Platform.runLater( () -> {
+							player1score.setText(data3.toString());
+						});
+					},
+					data4 -> {
+						Platform.runLater( () -> {
+							player2score.setText(data4.toString());
 						});
 					}
 
