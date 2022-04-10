@@ -8,10 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.geometry.*;
 import javafx.application.Platform;
-
-// import javafx.scene.control.Label;
-
-
 import javafx.scene.control.TextField;
 
 public class Main extends Application {
@@ -36,9 +32,7 @@ public class Main extends Application {
 	}
 	void incrementPlayers() {
 		int curClients = Integer.parseInt(numClientsNum.getText());
-		System.out.println("cur clients: " + curClients);
 		curClients++;
-
 		numClientsNum.setText(String.valueOf(curClients));
 	}
 
@@ -126,63 +120,13 @@ public class Main extends Application {
 						});
 					}, 
 					data2 -> {
-						// // data2 is either 1 or -1
-						// // if 1 then incrememnt else decrememnt
-						// if (data2 == "1") { incrementPlayers(); }
-						// else { decrementPlayers(); }
+						Platform.runLater( () -> {
+							if (data2 == "1") { incrementPlayers(); }
+							else { decrementPlayers(); }
+						});
 					}
             	); // end of serverConnection
 			}
 		}); // end of setOnAction
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// try {
-// Parent root = FXMLLoader.load(getClass().getResource("/FXML/startPage.fxml"));
-
-// primaryStage.setTitle("Server");
-// Scene s1 = new Scene(root, 700,400);
-// s1.getStylesheets().add("/styles/style.css");
-// primaryStage.setScene(s1);
-// primaryStage.show();
-
-// } catch(Exception e) {
-// e.printStackTrace();
-// System.exit(1);
-// }

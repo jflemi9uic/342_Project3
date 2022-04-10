@@ -102,21 +102,24 @@ public class Server {
             if (player1 == count) {
                 mi.playernumber = 1;
             } else if (player2 == count) {
-                mi.playernumber = 1;
+                mi.playernumber = 2;
             }
 
             try {
-            out.writeObject(mi);
+                out.writeObject(mi);
             } catch (Exception e) {}
 
             while (true) {
                 try {
                     MorraInfo data = (MorraInfo) in.readObject();
-                    callback.accept("Client #" + count + " played: " + data.getp1play());
-                    callback.accept("Client #" + count + " guessed: " + data.getp1guess());
-
-                    // callback.accept("client: " + count + " sent: " + data.idk());
-                    // updateClients("client #" + count + " said: " + data.idk());
+                    System.out.println("data.playernumber = " + data.playernumberREAL);
+                    if (data.playernumberREAL == 1) {
+                        callback.accept("Client #" + count + " played: " + data.getp1play());
+                        callback.accept("Client #" + count + " guessed: " + data.getp1guess());
+                    } else if (data.playernumberREAL == 2) {
+                        callback.accept("Client #" + count + " played: " + data.getp2play());
+                        callback.accept("Client #" + count + " guessed: " + data.getp2guess());
+                    }
 
                 } catch (Exception e) {
                     callback.accept("Client #" + count + " left");
