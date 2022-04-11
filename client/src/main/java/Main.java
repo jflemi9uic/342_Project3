@@ -20,7 +20,7 @@ public class Main extends Application {
 	}
 
 	Scene introScene,gameScene,thirdScene;
-	BorderPane introPane,gamePane;
+	BorderPane introPane,gamePane,thirdPane;
 	TextField portNum, ipAddress;
 	Button connect;
 	Client clientConnection;
@@ -32,6 +32,8 @@ public class Main extends Application {
 	ImageView opImageView;
 	TextField guessField = new TextField();
 	Button sendData = new Button("Send");
+	Button nextRound = new Button("Next Round"); //Button for next round
+	Button finishGame = new Button("GG"); //Button to move to third scene
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -40,11 +42,14 @@ public class Main extends Application {
 
 			introPane = new BorderPane();
 			gamePane = new BorderPane();
+			thirdPane = new BorderPane();
 			introPane.setStyle("-fx-font-family: SansSerif;-fx-background-color: lightblue;");
 			gamePane.setStyle("-fx-font-family: SansSerif;-fx-background-color: lightblue;");
+			thirdPane.setStyle("-fx-font-family: SansSerif;-fx-background-color: lightblue;");
 
 			introScene = new Scene(introPane, 600, 400);
 			gameScene = new Scene(gamePane, 600, 400);
+			thirdScene = new Scene(thirdPane, 600, 400);
 
 			// create intro scene
 			portNum = new TextField();
@@ -141,9 +146,9 @@ public class Main extends Application {
 											opImageView.setImage(t);
 										}
 										gameLog.getItems().add("Correct Answer was: " + String.valueOf(temp.getp1play() + temp.getp2play()));
-										temp.have2players = true;
+										temp.have2players = false;
 										guessField.setDisable(false);
-										sendData.setDisable(false);
+										sendData.setDisable(true);
 									}
 								}
 							}
@@ -154,6 +159,7 @@ public class Main extends Application {
 							MorraInfo temp = (MorraInfo) data2;
 							p1points.setText(String.valueOf(temp.p1Points));
 							p2points.setText(String.valueOf(temp.p2Points));
+
 //							System.out.println("idk something here");
 						});
 					}
@@ -233,7 +239,7 @@ public class Main extends Application {
 			VBox opWplayer = new VBox(playerbox, opHBOX, scores12);
 			HBox opWListview = new HBox(gameLog, opWplayer);
 			HBox plays_0_5 = new HBox(b0,b1,b2,b3,b4,b5);
-			HBox guess = new HBox(guessLabel, guessField, sendData);
+			HBox guess = new HBox(guessLabel, guessField, sendData,nextRound, finishGame);
 
 			VBox overall = new VBox(opWListview, plays_0_5, guess);
 			gamePane.setCenter(overall);
@@ -295,12 +301,36 @@ public class Main extends Application {
 					guessField.setDisable(true);
 
 					MorraInfo asdf = new MorraInfo(play, Integer.parseInt(guessField.getText()), PlayerNumber);
-					System.out.println("sent asdf");
 					clientConnection.send(asdf);
 
 				}
 			});
-			
+
+			nextRound.setOnAction(l -> {
+				// enable all buttons
+				sendData.setDisable(false);
+				guessField.setDisable(false);
+				b1.setDisable(false);
+				b2.setDisable(false);
+				b3.setDisable(false);
+				b4.setDisable(false);
+				b5.setDisable(false);
+				b0.setDisable(false);
+
+			});
+
+
+			// create a third scene
+			Label finalMessage = new Label("You won or lost");
+			thirdPane.setCenter(finalMessage);
+			finalMessage.setAlignment(Pos.CENTER);
+
+			finishGame.setOnAction(l -> {
+				if (p1points.getText().equals("2") || p2points.getText().equals("2")) {
+					primaryStage.setScene(thirdScene);
+				}
+			});
+
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.exit(1);
